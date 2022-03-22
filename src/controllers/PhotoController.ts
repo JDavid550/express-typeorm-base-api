@@ -30,6 +30,14 @@ class PhotoController implements IController {
     }
     
   };
+
+  public delete: IRequestHandler = async (req, res) => {
+    const photoId = Number(req.params.id);
+    await this.photoService.delete(photoId);
+    res.json({
+      data:"Object deleted",
+    });
+  };
 }
 
 export default PhotoController;

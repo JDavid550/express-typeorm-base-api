@@ -3,7 +3,7 @@ import { IService } from "../types/IService";
 import PhotoRepository from "../repositories/PhotoRepository";
 import Photo from "../entities/Photo";
 import PhotoCreateValidator from "../validators/Photo/PhotoCreateValidator";
-// import PhotoValidator from "../validators/Photo/PhotoValidator";
+
 
 
 
@@ -27,5 +27,10 @@ export default class PhotoService implements IService<Photo>{
     const getRepositoryService = PhotoService.getRepository();
     getRepositoryService.merge(photoToUpdate, payload);
     return getRepositoryService.save(photoToUpdate);
+  }
+
+  public async delete(id:number){
+    const getRepositoryService = PhotoService.getRepository();
+    await getRepositoryService.delete(id);
   }
 }
