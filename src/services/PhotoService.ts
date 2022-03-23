@@ -2,9 +2,17 @@
 import { IService } from "../types/IService";
 import PhotoRepository from "../repositories/PhotoRepository";
 import Photo from "../entities/Photo";
+<<<<<<< Updated upstream
 import PhotoCreateBodyValidator from "../validators/Photo/PhotoCreateBodyValidator";
 import PhotoUpdateBodyValidator from "../validators/Photo/PhotoUpdateBodyValidator";
 import NotFoundException from "../exceptions/NotFoundException";
+=======
+import PhotoCreateValidator from "../validators/Photo/PhotoCreateValidator";
+import PhotoUpdateValidator from "../validators/Photo/PhotoUpdateValidator";
+
+
+
+>>>>>>> Stashed changes
 
 /**
  * Handle business logic for Photo using Data Mapper & Repository pattern.
@@ -30,6 +38,7 @@ export default class PhotoService implements IService<Photo>{
    * @param id
    */
   public async getById(id: number): Promise<Photo> {
+<<<<<<< Updated upstream
     const photo = await PhotoService.getRepository().findById(id);
     if (!photo) throw new NotFoundException(PhotoService.notFoundErrorMessage(id));
     return photo;
@@ -58,6 +67,21 @@ export default class PhotoService implements IService<Photo>{
 
     repo.merge(photo, photoUpdateDate);
     return PhotoService.getRepository().save(photo);
+=======
+    return PhotoService.getRepository().findById(id);
+  }
+
+  public async create(payload: PhotoCreateValidator): Promise<Photo> {
+    return PhotoService.getRepository().save({ ...payload });
+  }
+
+  public async update(id:number, payload:PhotoUpdateValidator): Promise<Photo>{
+    const getRepositoryService = PhotoService.getRepository();
+    const photoToUpdate = await this.getById(id);
+    if (!photoToUpdate) throw new Error(`No encontrada ${id}`);
+    getRepositoryService.merge(photoToUpdate, payload);
+    return getRepositoryService.save(photoToUpdate);
+>>>>>>> Stashed changes
   }
 
   /**

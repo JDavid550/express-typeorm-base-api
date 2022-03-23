@@ -1,6 +1,7 @@
 import { IController } from "../types/IController";
 import PhotoService from "../services/PhotoService";
 import { IRequestHandler } from "../types/IRequestHandler";
+import Log from "../utils/Log";
 
 /**
  * Handle HTTP requests for Photos
@@ -42,6 +43,7 @@ class PhotoController implements IController {
     res.status(201).json({ data: photo });
   };
 
+<<<<<<< Updated upstream
   /**
    * Updates photo by id
    * Success: 200 & updated entity json.
@@ -52,6 +54,20 @@ class PhotoController implements IController {
     const photoUpdatePayload = req.body;
     const photo = await this.photoService.updateById(Number(req.params.id), photoUpdatePayload);
     res.status(200).json({ data: photo });
+=======
+  public update: IRequestHandler = async (req, res) => {
+    const photoId = Number(req.params.id);
+    const photoPayload = req.body;
+    try {
+      const photoUpdated = await this.photoService.update(photoId, photoPayload);
+      res.status(200).json({
+        data:photoUpdated,
+      });
+      
+    } catch (error) {
+      Log.error(error);
+    }
+>>>>>>> Stashed changes
   };
 
   /**
