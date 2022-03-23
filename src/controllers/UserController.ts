@@ -42,6 +42,16 @@ class UserController implements IController {
     res.status(201).json({ data: user });
   };
 
+  /**
+   * Deletes user by id
+   * Success: 204.
+   * @param req
+   * @param res
+   */
+  public deleteById: IRequestHandler = async (req, res) => {
+    await this.userService.deleteById(Number(req.params.id));
+    res.sendStatus(204);
+  };
 }
 
 export default UserController;

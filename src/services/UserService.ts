@@ -43,4 +43,16 @@ export default class UserService implements IService<User>{
   public async create(userData: UserCreateValidator): Promise<User> {
     return UserService.getRepository().save({ ...userData });
   }
+
+  /**
+   * Deletes photo by id
+   * Success: void
+   * @param id
+   */
+  public async deleteById(id: number): Promise<void> {
+    const deleteData = await UserService.getRepository().delete({ id });
+    if (deleteData.affected === 0) {
+      throw new NotFoundException(UserService.notFoundErrorMessage(id));
+    }
+  }
 }
