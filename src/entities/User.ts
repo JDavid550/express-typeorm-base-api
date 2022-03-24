@@ -1,7 +1,7 @@
 import {
   Column, PrimaryGeneratedColumn, Entity, OneToMany, 
 } from "typeorm";
-import { MinLength, Matches } from "class-validator";
+// import { MinLength, Matches } from "class-validator";
 import Photo from "./Photo";
 
 enum RoleEnum{
@@ -19,9 +19,6 @@ export default class User {
   @PrimaryGeneratedColumn()
     id: number;
 
-  // @Column()
-  //   name: string;
-
   @Column()
     firstName: string;
 
@@ -32,8 +29,6 @@ export default class User {
     email: string;
 
   @Column()
-  @MinLength(8)
-  @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/, { message:"Your password is too weak" })
     password: string;
 
   @Column({ nullable:true })
