@@ -2,6 +2,7 @@ import { IController } from "../types/IController";
 import PhotoService from "../services/PhotoService";
 import { IRequestHandler } from "../types/IRequestHandler";
 
+
 /**
  * Handle HTTP requests for Photos
  */
