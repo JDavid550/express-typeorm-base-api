@@ -1,5 +1,5 @@
 import { 
-  Column, PrimaryGeneratedColumn, Entity, ManyToOne, 
+  Column, PrimaryGeneratedColumn, Entity, ManyToOne, CreateDateColumn, UpdateDateColumn, 
 } from "typeorm";
 import User from "./User";
 
@@ -7,6 +7,12 @@ import User from "./User";
 export default class Photo {
   @PrimaryGeneratedColumn()
     id: number;
+
+  @CreateDateColumn()
+    createdAt?:string;
+    
+  @UpdateDateColumn()
+    updatedAt?:string;
 
   @Column()
     name: string;

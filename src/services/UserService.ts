@@ -4,6 +4,7 @@ import UserRepository from "../repositories/UserRepository";
 import User from "../entities/User";
 import UserCreateValidator from "../validators/User/UserCreateValidator";
 import NotFoundException from "../exceptions/NotFoundException";
+import UserUpdateValidator from "../validators/User/UserUpdateValidator";
 
 /**
  * Handle business logic for Photo using Data Mapper & Repository pattern.
@@ -25,7 +26,7 @@ export default class UserService implements IService<User>{
 
   /**
    * Gets user by id
-   * Success: existing photo
+   * Success: existing user
    * @param id
    */
 
@@ -37,15 +38,30 @@ export default class UserService implements IService<User>{
 
   /**
    * Creates User
-   * Success: new photo
+   * Success: new user
    * @param userData
    */
   public async create(userData: UserCreateValidator): Promise<User> {
     return UserService.getRepository().save({ ...userData });
   }
 
+  /** 
+   * Updates User
+   * Success: updates user
+   * @param id
+   * @param payload
+  */
+  public async updateById(id:number, payload: UserUpdateValidator): Promise<User>{
+    const user = await this.getById(id);
+    const repo = UserService.getRepository();
+    const updatedUser = repo.merge(user, payload);
+    const result =  repo.save(updatedUser); 
+    return result;
+
+  }
+
   /**
-   * Deletes photo by id
+   * Deletes user by id
    * Success: void
    * @param id
    */

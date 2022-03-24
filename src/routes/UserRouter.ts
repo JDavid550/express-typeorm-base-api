@@ -4,7 +4,8 @@ import IRouter from "../types/IRouter";
 import UserCreateValidator from "../validators/User/UserCreateValidator";
 import BodyValidator from "../middlewares/BodyValidator";
 import ParamsValidator from "../middlewares/ParamsValidator";
-import UserGetParamsValidator from "../validators/User/UserGetParamsValidator";
+import IdParamValidator from "../validators/IdParamValidator";
+import UserUpdateValidator from "../validators/User/UserUpdateValidator";
 
 /**
  * Router for Users
@@ -22,9 +23,10 @@ class UserRouter implements IRouter {
   }
 
   initializeRoutes() {
-    this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(UserGetParamsValidator), this.userController.getById);
+    this.router.get(`${this.path}/:id(\\d+)`, ParamsValidator(IdParamValidator), this.userController.getById);
     this.router.post(this.path, BodyValidator(UserCreateValidator, true), this.userController.create);
-    this.router.delete(`${this.path}/:id(\\d+)`, this.userController.deleteById);
+    this.router.patch(`${this.path}/:id(\\d+)`, ParamsValidator(IdParamValidator), BodyValidator(UserUpdateValidator, true), this.userController.update); 
+    this.router.delete(`${this.path}/:id(\\d+)`, ParamsValidator(IdParamValidator), this.userController.deleteById);
   }
 }
 

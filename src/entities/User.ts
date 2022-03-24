@@ -1,17 +1,17 @@
+import { IsEmail } from "class-validator";
 import {
-  Column, PrimaryGeneratedColumn, Entity, OneToMany, 
+  Column, PrimaryGeneratedColumn, Entity, OneToMany, CreateDateColumn, UpdateDateColumn,
 } from "typeorm";
-// import { MinLength, Matches } from "class-validator";
 import Photo from "./Photo";
 
-enum RoleEnum{
-  admin,
-  developer,
-  designer,
-  project,
-  manager,
-  scrumMaster,
-  HR,
+export enum RoleEnum{
+  ADMIN = "ADMIN",
+  DEVELOPER = "DEVELOPER",
+  DESIGNER = "DESIGNER",
+  PM = "PROJECT MANAGER",
+  SM = "SCRUM MASTER",
+  HR = "HR",
+  CONTRACTOR = "CONTRACTOR",
 }
 
 @Entity()
@@ -19,13 +19,20 @@ export default class User {
   @PrimaryGeneratedColumn()
     id: number;
 
+  @CreateDateColumn()
+    createdAt?:string;
+    
+  @UpdateDateColumn()
+    updatedAt?:string;
+
   @Column()
     firstName: string;
 
   @Column()
     lastName: string;
 
-  @Column()
+  @Column({ type: "varchar", unique:true })
+  @IsEmail()
     email: string;
 
   @Column()
@@ -34,10 +41,10 @@ export default class User {
   @Column({ nullable:true })
     avatarImg!: string;
 
-  @Column({ nullable:true, default: RoleEnum.developer })
+  @Column({ nullable:true, default: RoleEnum.DEVELOPER })
     role!: RoleEnum;
 
   @OneToMany(() => Photo, photo => photo.user, { eager:true })
-    photos: Photo[];
+    photos?: Photo[];
 
 }
