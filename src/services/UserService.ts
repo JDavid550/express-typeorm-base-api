@@ -83,13 +83,13 @@ export default class UserService implements IService<User>{
     const method:Method = "POST";
     const options = {
       method,
-      url:"https://dev-fqoy7wf5.us.auth0.com/oauth/token",
+      url: process.env.AUTH0_URL,
       headers:{ "content-type": "application/json" },
       data: { 
         grant_type:"client_credentials",
-        client_id:"5iWgNjmZB3Q2age03vC8hmm5pmSi7Qoe", 
-        client_secret:"00pYDZqs698v_Mof8jjx9iu47vpdyzDPfs-hYukCS_OeSzH6E_YF32v4jVneTknE", 
-        audience:"https://dev-fqoy7wf5.us.auth0.com/api/v2/", 
+        client_id: process.env.AUTH0_CLIENT_ID, 
+        client_secret: process.env.AUTH0_CLIENT_SECRET, 
+        audience: process.env.AUTH0_AUDIENCE, 
       },
     };
 
