@@ -27,6 +27,8 @@ class UserRouter implements IRouter {
     this.router.post(this.path, BodyValidator(UserCreateValidator, true), this.userController.create);
     this.router.patch(`${this.path}/:id(\\d+)`, ParamsValidator(IdParamValidator), BodyValidator(UserUpdateValidator, true), this.userController.update); 
     this.router.delete(`${this.path}/:id(\\d+)`, ParamsValidator(IdParamValidator), this.userController.deleteById);
+
+    this.router.get(`${this.path}/auth`, ParamsValidator(IdParamValidator), this.userController.auth);
   }
 }
 

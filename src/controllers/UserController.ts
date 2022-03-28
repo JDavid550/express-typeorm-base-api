@@ -65,6 +65,18 @@ class UserController implements IController {
     await this.userService.deleteById(Number(req.params.id));
     res.sendStatus(204);
   };
+
+  /**
+   * Auth0 try
+   */
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  public auth = async (req: any, res:any) => {
+    const result = await this.userService.auth();
+    res.json({
+      data:result,
+    });
+  };
 }
 
 export default UserController;

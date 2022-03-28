@@ -1,10 +1,12 @@
 /* eslint-disable class-methods-use-this */
+import axios, { Method } from "axios";
 import { IService } from "../types/IService";
 import UserRepository from "../repositories/UserRepository";
 import User from "../entities/User";
 import UserCreateValidator from "../validators/User/UserCreateValidator";
 import NotFoundException from "../exceptions/NotFoundException";
 import UserUpdateValidator from "../validators/User/UserUpdateValidator";
+
 
 /**
  * Handle business logic for Photo using Data Mapper & Repository pattern.
@@ -71,4 +73,38 @@ export default class UserService implements IService<User>{
       throw new NotFoundException(UserService.notFoundErrorMessage(id));
     }
   }
+
+  /**
+   * Auth0
+   */
+
+
+  public async auth():Promise<any>{
+    const method:Method = "POST";
+    const options = {
+      method,
+      url:"https://dev-fqoy7wf5.us.auth0.com/oauth/token",
+      headers:{ "content-type": "application/json" },
+      data: { 
+        grant_type:"client_credentials",
+        client_id:"5iWgNjmZB3Q2age03vC8hmm5pmSi7Qoe", 
+        client_secret:"00pYDZqs698v_Mof8jjx9iu47vpdyzDPfs-hYukCS_OeSzH6E_YF32v4jVneTknE", 
+        audience:"https://dev-fqoy7wf5.us.auth0.com/api/v2/", 
+      },
+    };
+
+    const data = await axios.request(options)
+      .then(response => {
+        console.log(response.data);
+        return response.data;
+      })
+      .catch(error => {
+        console.error(error);
+        return error;
+      });
+
+    
+    return data;
+  }
+  
 }
